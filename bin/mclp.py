@@ -10,7 +10,7 @@ actions = {
     "blown_up": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was blown up by (.?*)"),
     "shot": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was shot by (.?*)"),
     "slain": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was slain by (.?*)"),
-    "burnt_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was burnt to a crips whilst fighting (.?*)"),
+    "burnt_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was burnt to a crisp whilst fighting (.?*)"),
     "lava": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) tried to swim in lava"),
     "inflames": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) went up in flames"),
     "fell": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) fell from a high place"),
