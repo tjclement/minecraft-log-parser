@@ -22,13 +22,43 @@ def print_help():
     print("Minecraft Log Parser usage:")
     print("  mclp [path to server.log]")
 
+def read_log():
+    f = open(path)
+    lines = f.readlines()
+    f.close()
+    return lines
+
+def find_action_match(line):
+    regex = None
+
+    for action in actions:
+        if actions[action].match(line):
+            regex = actions[action]
+            break
+
+    return regex
+
+def execute_action(action, regexresult):
+    if regex is not None:
+        data = regex.split(regexresult)
+
+    method_name = "handle_" + action
+    possibles = globals().copy()
+    possibles.update(locals())
+    method = possibles.get(method_name)()
+    if not method:
+         raise Exception("Method %s not implemented" % method_name)
+    method()
+
+
+
 if len(sys.argv) != 2:
     print_help()
     sys.exit(0)
 elif sys.argv[1]:
     path = sys.argv[1]
 
-f = open(path)
+main(path)
 
 online = {}
 totals = {}
