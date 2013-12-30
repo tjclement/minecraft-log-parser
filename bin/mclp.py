@@ -15,7 +15,7 @@ actions = {
     "inflames": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) went up in flames"),
     "fell": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) fell from a high place"),
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.?*)"),
-    "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
+    "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned")
 }
 
 def print_help():
