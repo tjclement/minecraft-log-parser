@@ -1,138 +1,62 @@
 #!/usr/bin/env python
 import re, datetime, operator, sys
+import mc_actions
 
-DATETIME = "([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) ";
-
-actions = {
-    "login": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) ?\[\/[0-9.]{4,15}\:[0-9]*\]"),
-    "logout": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) lost connection"),
-    "server_stop": re.compile(DATETIME + "\[INFO\] Stopping server"),
-    "blown_up": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was blown up by (.?*)"),
-    "shot": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was shot by (.?*)"),
-    "slain": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was slain by (.?*)"),
-    "burnt_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was burnt to a crisp whilst fighting (.?*)"),
-    "lava": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) tried to swim in lava"),
-    "inflames": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) went up in flames"),
-    "fell": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) fell from a high place"),
-    "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.?*)"),
-    "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned")
-}
 
 def print_help():
     print("Minecraft Log Parser usage:")
     print("  mclp [path to server.log]")
 
-def read_log():
+
+def read_log(path):
     f = open(path)
     lines = f.readlines()
     f.close()
     return lines
 
+
 def find_action_match(line):
     regex = None
+    action_name = None
+
+    actions = mc_actions.actions.copy()
 
     for action in actions:
         if actions[action].match(line):
+            action_name = action
             regex = actions[action]
             break
 
-    return regex
+    if regex is not None:
+        return action_name, regex.split(line)
+    else:
+        return None, None
+
 
 def execute_action(action, regexresult):
-    if regex is not None:
-        data = regex.split(regexresult)
-
     method_name = "handle_" + action
-    possibles = globals().copy()
-    possibles.update(locals())
-    method = possibles.get(method_name)()
-    if not method:
-         raise Exception("Method %s not implemented" % method_name)
-    method()
+    method = None
 
+    try:
+        method = getattr(mc_actions, method_name)
+    except AttributeError:
+        print "Method %s not implemented, but an action regex was matched for it" % method_name
+        return
+    method(regexresult)
+
+
+def main(logfile_path):
+    lines = read_log(logfile_path)
+    for line in lines:
+        [action, regexresult] = find_action_match(line)
+        if action is not None:
+            execute_action(action, regexresult)
 
 
 if len(sys.argv) != 2:
     print_help()
     sys.exit(0)
 elif sys.argv[1]:
-    path = sys.argv[1]
+    filepath = sys.argv[1]
 
-main(path)
-
-online = {}
-totals = {}
-for line in f.readlines():
-    regex = None
-    action = None
-    player = None
-    time = None
-    for action in actions:
-        if actions[action].match(line):
-            regex = actions[action]
-            break
-    
-    if regex is not None:
-        # Get the user's name and parse the datetime
-        data = regex.split(line)
-        player = data[7]
-        time = datetime.datetime(int(data[1]), int(data[2]), int(data[3]), int(data[4]), int(data[5]), int(data[6]))
-    
-        # Now do things!
-        if action is "login":
-            online[player] = time
-        elif action is "logout":
-            if player not in totals:
-                totals[player] = 0
-            if player in online:
-                delta = time - online[player]
-            else:
-                continue
-
-            totals[player] += delta.seconds
-            del online[player]
-        elif action is "server_stop":
-            # Log off all players
-            for player in online:
-                if player not in totals:
-                    totals[player] = 0
-                delta = time - online[player]
-                totals[player] += delta.seconds
-            online = {}
-
-sort = sorted(totals.iteritems(), key=operator.itemgetter(1))
-times = []
-for player in sort:
-    # Convert to hours/minutes/seconds
-    time = "%20s: " % player[0]
-    total = player[1]
-    days = total / 86400
-    if days > 0:
-        time += "%2s days" % int(days)
-        total -= int(days) * 86400
-    else:
-        time += "       "
-    hours = total / 3600
-    if hours > 0:
-        time += " %2s hours" % int(hours)
-        total -= int(hours) * 3600
-    else:
-        time += "         "
-    mins = total / 60
-    if mins > 0:
-        time += " %2s minutes" % int(mins)
-        total -= int(mins) * 60
-    else:
-        time += "           "
-    if total > 0:
-        time += " %2s seconds" % total
-    
-    times.append(time)
-
-times.reverse()
-
-counter = 0
-for time in times:
-    counter = counter + 1
-    print "%2d) %s" % (counter, time)
-f.close()
+main(filepath)
