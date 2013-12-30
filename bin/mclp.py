@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 import re, datetime, operator, sys
 
+DATETIME = "([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) ";
+
 actions = {
-    "login": re.compile("([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) \[INFO\] ([A-z0-9]*) ?\[\/[0-9.]{4,15}\:[0-9]*\]"),
-    "logout": re.compile("([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) \[INFO\] ([A-z0-9]*) lost connection"),
-    "server_stop": re.compile("([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) \[INFO\] Stopping server")
+    "login": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) ?\[\/[0-9.]{4,15}\:[0-9]*\]"),
+    "logout": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) lost connection"),
+    "server_stop": re.compile(DATETIME + "\[INFO\] Stopping server")
 }
 
 def print_help():
