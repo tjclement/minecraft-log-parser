@@ -6,7 +6,12 @@ DATETIME = "([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{
 actions = {
     "login": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) ?\[\/[0-9.]{4,15}\:[0-9]*\]"),
     "logout": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) lost connection"),
-    "server_stop": re.compile(DATETIME + "\[INFO\] Stopping server")
+    "server_stop": re.compile(DATETIME + "\[INFO\] Stopping server"),
+    "blown_up": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was blown up by (.?*)"),
+    "shot": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was shot by (.?*)"),
+    "slain": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was slain by (.?*)"),
+    "burnt_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was burnt to a crips whilst fighting (.?*)"),
+    "lava": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) tried to swim in lava"),
 }
 
 def print_help():
