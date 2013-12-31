@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import re, datetime, operator, sys
 import mc_actions
+import mc_datahandler
 
 
 def print_help():
@@ -61,5 +62,5 @@ elif sys.argv[1]:
 
 main(filepath)
 
-for user in mc_actions.data:
-    print user, ":", mc_actions.data[user]
+
+mc_datahandler.run(mc_actions.server_name, mc_actions.data)
