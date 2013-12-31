@@ -16,10 +16,12 @@ actions = {
     "fell": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) fell from a high place"),
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.*)"),
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
-    "server_start": re.compile(DATETIME + "\[INFO\] Starting minecraft server")
+    "server_start": re.compile(DATETIME + "\[INFO\] Starting minecraft server"),
+    "server_name": re.compile(DATETIME + "\[INFO\] Preparing level \"(.*)\"")
 }
 
 data = {}
+server_name = ""
 
 def parse_time(regexresult):
     time = datetime.datetime(int(regexresult[1]), int(regexresult[2]), int(regexresult[3]),
@@ -118,6 +120,14 @@ def handle_server_start(regexresults):
     return handle_server_restart(regexresults)
 
 
+def handle_server_name(regexresults):
+    global server_name
+
+    server_name = regexresults[7]
+
+    return None
+
+
 def handle_slain(regexresults):
     time = parse_time(regexresults)
     user = regexresults[7]
@@ -153,9 +163,33 @@ def handle_lava(regexresults):
     return None
 
 
+def handle_inflames(regexresults):
+    user = regexresults[7]
+    cause = "burnt to death"
+
+    add_user_accidental_death(user, cause)
+    return None
+
+
 def handle_drowned(regexresults):
     user = regexresults[7]
     cause = "drowned"
 
     add_user_accidental_death(user, cause)
+    return None
+
+def handle_fell_by(regexresults):
+    user = regexresults[7]
+    villain = regexresults[8]
+    cause = "fell to death fighting " + villain
+
+    add_user_assisted_death(user, cause)
+    return None
+
+def handle_burnt_by(regexresults):
+    user = regexresults[7]
+    villain = regexresults[8]
+    cause = "burnt to death fighting " + villain
+
+    add_user_assisted_death(user, cause)
     return None
