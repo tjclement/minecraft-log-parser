@@ -23,6 +23,7 @@ actions = {
 data = {}
 server_name = ""
 
+
 def parse_time(regexresult):
     time = datetime.datetime(int(regexresult[1]), int(regexresult[2]), int(regexresult[3]),
                                     int(regexresult[4]), int(regexresult[5]), int(regexresult[6]))
