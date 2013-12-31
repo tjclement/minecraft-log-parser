@@ -60,3 +60,6 @@ elif sys.argv[1]:
     filepath = sys.argv[1]
 
 main(filepath)
+
+for user in mc_actions.data:
+    print user, ":", mc_actions.data[user]
