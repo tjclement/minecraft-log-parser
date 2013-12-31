@@ -4,4 +4,3 @@ dist
 env
 MANIFEST
 *.pyc
-*.html
