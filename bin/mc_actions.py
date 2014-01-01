@@ -14,6 +14,7 @@ actions = {
     "lava": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) tried to swim in lava"),
     "inflames": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) went up in flames"),
     "fell": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) fell from a high place"),
+    "pricked": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was pricked to death"),
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.*)"),
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
     "server_start": re.compile(DATETIME + "\[INFO\] Starting minecraft server"),
@@ -155,6 +156,12 @@ def handle_fell(regexresults):
     add_user_accidental_death(user, cause)
     return None
 
+def handle_pricked(regexresults):
+    user = regexresults[7]
+    cause = "pricked to death"
+
+    add_user_accidental_death(user, cause)
+    return None
 
 def handle_lava(regexresults):
     user = regexresults[7]
