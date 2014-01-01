@@ -185,8 +185,12 @@ def createpage(server_name, user_data):
                                 killerfriendly = "Jumped into the fire to feel the burn"
                                 killerfoto = "Burnt"
                             else:
-                                killerfriendly = "killer"
-                                killerfoto = ''
+                                if killer == "pricked to death":
+                                    killerfriendly = "Hugged something sharp"
+                                    killerfoto = "Pricked"
+                                else:
+                                    killerfriendly = killer
+                                    killerfoto = ''
                 #fotos!
                 if os.path.exists('../images/'+killerfoto+'.png'):
                     mugshot = '../images/'+killerfoto+'.png'
