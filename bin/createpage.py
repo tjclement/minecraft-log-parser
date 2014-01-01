@@ -137,7 +137,6 @@ def createpage(server_name, user_data):
                         causefriendly = 'Burnt to death while fighting '
                     else:
                         causefriendly = splitkiller[0]+' while fighting '
-                print splitkiller
                 if killerfriendly == 'entity.DartCraft.entityAngryEnderman.name':
                     killerfriendly = 'Enderman'
                 else:
@@ -214,7 +213,7 @@ def createpage(server_name, user_data):
     generatedpage = generatedpage.replace('{%server_name%}', server_name)
     generatedpage = generatedpage.replace('{%playerssummary%}', playerssummary)
     f.write(generatedpage)
-    print user_data
+    #print user_data
 
     f.close()
     fheader.close()
