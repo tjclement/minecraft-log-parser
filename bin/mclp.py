@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import re, datetime, operator, sys
+import re, datetime, operator, sys, time
 import mc_actions
 import mc_datahandler
+
+reached_log_end = False
 
 
 def print_help():
@@ -9,11 +11,24 @@ def print_help():
     print("  mclp [path to server.log]")
 
 
-def read_log(path):
-    f = open(path)
-    lines = f.readlines()
-    f.close()
-    return lines
+def read_log(path, interactive = True):
+    f = open(path, "r")
+    if interactive:
+        f.seek(0, 2)
+    else:
+        f.seek(0)
+
+    while 1:
+        where = f.tell()
+        line = f.readline()
+        if not line:
+            if(interactive):
+                time.sleep(1)
+                f.seek(where)
+            else:
+                return
+        else:
+            yield line
 
 
 def find_action_match(line):
@@ -47,11 +62,21 @@ def execute_action(action, regexresult):
 
 
 def main(logfile_path):
-    lines = read_log(logfile_path)
-    for line in lines:
+    #Loop through existing log entries first without executing the data handler on each action
+    for line in read_log(logfile_path, interactive=False):
         [action, regexresult] = find_action_match(line)
         if action is not None:
             execute_action(action, regexresult)
+
+    #Invoke data handler once
+    mc_datahandler.run(mc_actions.server_name, mc_actions.data)
+
+    #Invoke data handler interactively upon every new action
+    for line in read_log(logfile_path):
+        [action, regexresult] = find_action_match(line)
+        if action is not None:
+            execute_action(action, regexresult)
+            mc_datahandler.run(mc_actions.server_name, mc_actions.data)
 
 
 if len(sys.argv) != 2:
@@ -61,6 +86,3 @@ elif sys.argv[1]:
     filepath = sys.argv[1]
 
 main(filepath)
-
-
-mc_datahandler.run(mc_actions.server_name, mc_actions.data)
