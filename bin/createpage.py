@@ -43,7 +43,7 @@ def createpage(server_name, user_data):
                 amount = user_data[playername]['suicides'][num]
                 suicides_num += amount
         loggeddeaths_num = killedby_num + assisted_suicides_num + suicides_num
-        playerssummary = playerssummary+'<tr><td valign=top align=left><a href="#'+playername+'"><strong>'+playername+'</strong></td><td valign=top align=left>'+totalloginformatted+'</td><td valign=top align=left>'+str(loggeddeaths_num)+'</td><td valign=top align=left><img src="'+playerpicture+'" alt="'+playername+'s avatar"></td></tr>'
+        playerssummary = playerssummary+'<tr><td valign=top align=left><a href="#'+playername+'"><strong>'+playername+'</strong></a></td><td valign=top align=left>'+totalloginformatted+'</td><td valign=top align=left>'+str(loggeddeaths_num)+'</td><td valign=top align=left><img src="'+playerpicture+'" alt="'+playername+'s avatar"></td></tr>'
 
     #generate the per user part
     userparts = ''
