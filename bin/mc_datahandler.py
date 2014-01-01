@@ -1,5 +1,6 @@
 import requests
 import time
+import createpage
 
 MINUTE = 60
 HOUR = MINUTE * 60
@@ -50,5 +51,6 @@ def run(server_name, user_data):
 
             user_data[user]["totalloginformatted"] = seconds_to_formatted_string(total_time)
 
-        print user, ":", user_data[user]
+        #print user, ":", user_data[user]
+    createpage.createpage(server_name, user_data)
     return None
