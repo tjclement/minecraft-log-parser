@@ -1,0 +1,18 @@
+<p>
+<a name="{%username%}"><strong>{%username%} stats:</strong></a><br>
+
+<p>
+<table border="1" cellspacing="0" cellpadding="5">
+    <tr><td rowspan="5" valign=top align=left><img src="{%playerpicture%}" alt="{%username%}s avatar"</td><td>Time played:</td><td>{%totalloginformatted%}</td></tr>
+    <tr><td valign=top align=left>Deaths:</td><td valign=top align=left>{%totaldeaths%}</td></tr>
+    <tr><td valign=top align=left>Number of times killed:</td><td valign=top align=left>{%totalkilled%}</td></tr>
+    <tr><td valign=top align=left>Assisted suicides:</td><td valign=top align=left>{%totalassistedsuicides%}</td></tr>
+    <tr><td valign=top align=left>Suicides:</td><td valign=top align=left>{%totalsuicides%}</td></tr>
+</table>
+<p>
+<table border="1" cellspacing="0" cellpadding="5">
+    <!-- Here the death breakdown will be added. The program will insert <tr><td>Cause</td><td>Number</td></tr> --->
+    {%deathrows%}
+</table>
+</p>
+<hr>
