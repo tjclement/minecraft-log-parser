@@ -48,9 +48,9 @@ def seconds_to_formatted_string(time_seconds):
 def get_total_killed_by(user, user_data):
     count = 0
 
-    if "killed_by" in user_data[user]:
-        for villain in user_data[user]["killed_by"]:
-            count += user_data[user]["killed_by"][villain]
+    if "killedby" in user_data[user]:
+        for villain in user_data[user]["killedby"]:
+            count += user_data[user]["killedby"][villain]
 
     return count
 
