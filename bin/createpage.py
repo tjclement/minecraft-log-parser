@@ -57,9 +57,6 @@ def parsekiller(type, killerlog):
     killerdata = [killerdescription, killerpicture]
     return killerdata
 
-def assisted_suicide_parser(type, killerlog):
-    return
-
 def findpicture(entity):
     extensions = ['.png', '.PNG', '.jpg', '.JPG', '.gif', '.GIF']
     imagedirs = ['../playerskins/', '../images/']
