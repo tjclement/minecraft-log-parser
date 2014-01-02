@@ -38,7 +38,7 @@ def command_deaths_self(user, message, user_data):
 
 
 def command_last_seen(user, message, user_data):
-    target = commands["last_seen"].split(message)[0]
+    target = commands["last_seen"].split(message)[1]
     last_seen = mc_datahandler.get_last_login(target, user_data)
 
     if last_seen is None:
