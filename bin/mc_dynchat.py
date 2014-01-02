@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import re
 import json
 import requests
 import datetime
+import time
 import mc_dynchat
 import mc_datahandler
 import mc_settings
@@ -54,7 +57,7 @@ def command_norris(user, message, user_data):
     send_chat_message(joke)
 
 def split_message(message):
-    n = 100
+    n = 94
     for start in range(0, len(message), n):
         yield message[start:start+n]
 
@@ -62,8 +65,9 @@ def send_chat_message(message):
     post_headers = {"Content-type": "application/json"}
     dynmap_send_uri = mc_settings.settings["dynmap_uri"] + "up/sendmessage"
 
-
     for text in split_message(message):
+        text =  u'§b§l' + text
         post_data = {"message": text, "name": mc_settings.settings["chat_name"]}
         r = requests.post(dynmap_send_uri, data=json.dumps(post_data),
                         headers=post_headers, verify=mc_settings.settings["verify_ssl"])
+        time.sleep(6)
