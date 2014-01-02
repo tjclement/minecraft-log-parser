@@ -78,7 +78,7 @@ def send_chat_message(message):
     dynmap_send_uri = mc_settings.settings["dynmap_uri"] + "up/sendmessage"
 
     for text in split_message(message):
-        text =  u'§b§l' + text
+        text = u'§b§l' + text
         post_data = {"message": text, "name": mc_settings.settings["chat_name"]}
         r = requests.post(dynmap_send_uri, data=json.dumps(post_data),
                         headers=post_headers, verify=mc_settings.settings["verify_ssl"])
