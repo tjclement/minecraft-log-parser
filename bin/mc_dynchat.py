@@ -17,7 +17,6 @@ def parse_chat_message(timestamp, user, message, user_data):
     threshold = datetime.datetime.now() - datetime.timedelta(seconds=5)
 
     if timestamp < threshold:
-        print "Received old chat message"
         return None
 
     for command in commands:
