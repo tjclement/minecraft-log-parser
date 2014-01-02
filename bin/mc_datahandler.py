@@ -78,7 +78,7 @@ def get_total_suicides(user, user_data):
 def get_total_deaths(user, user_data):
     total_deaths = 0
 
-    if user not in user_data:
+    if not user_exists(user, user_data):
         return None
 
     total_deaths += get_total_killed_by(user, user_data)
@@ -86,6 +86,20 @@ def get_total_deaths(user, user_data):
     total_deaths += get_total_suicides(user, user_data)
 
     return total_deaths
+
+
+def user_exists(user, user_data):
+    return user in user_data
+
+
+def get_last_login(user, user_data):
+    if not user_exists(user, user_data):
+        return None
+
+    if "lastlogin" not in user_data[user]:
+        return None
+
+    return user_data[user]["lastlogin"]
 
 
 def run(server_name, user_data):
