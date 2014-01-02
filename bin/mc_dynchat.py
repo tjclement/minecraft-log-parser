@@ -54,7 +54,7 @@ def command_norris(user, message, user_data):
     send_chat_message(joke)
 
 def split_message(message):
-    n = 119
+    n = 100
     for start in range(0, len(message), n):
         yield message[start:start+n]
 
