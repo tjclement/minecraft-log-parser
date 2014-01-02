@@ -53,11 +53,17 @@ def command_norris(user, message, user_data):
 
     send_chat_message(joke)
 
+def split_message(message):
+    n = 119
+    for start in range(0, len(message), n):
+        yield message[start:start+n]
 
 def send_chat_message(message):
     post_headers = {"Content-type": "application/json"}
-    post_data = {"message": message, "name": mc_settings.settings["chat_name"]}
     dynmap_send_uri = mc_settings.settings["dynmap_uri"] + "up/sendmessage"
 
-    r = requests.post(dynmap_send_uri, data=json.dumps(post_data),
+
+    for text in split_message(message):
+        post_data = {"message": text, "name": mc_settings.settings["chat_name"]}
+        r = requests.post(dynmap_send_uri, data=json.dumps(post_data),
                         headers=post_headers, verify=mc_settings.settings["verify_ssl"])
