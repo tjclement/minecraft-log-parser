@@ -7,6 +7,7 @@ HOUR = MINUTE * 60
 DAY = HOUR * 24
 MONTH = DAY * 30
 
+
 def seconds_to_formatted_string(time_seconds):
     if time_seconds <= 0:
         return "0 seconds"
