@@ -1,5 +1,6 @@
 import re
 import datetime
+import mc_dynchat
 
 DATETIME = "([0-9]{4})\-([0-9]{2})\-([0-9]{2}) ([0-2][0-9])\:([0-9]{2})\:([0-9]{2}) ";
 
@@ -7,6 +8,8 @@ actions = {
     "login": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) ?\[\/[0-9.]{4,15}\:[0-9]*\]"),
     "logout": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) lost connection"),
     "server_stop": re.compile(DATETIME + "\[INFO\] Stopping server"),
+    "server_start": re.compile(DATETIME + "\[INFO\] Starting minecraft server"),
+    "server_name": re.compile(DATETIME + "\[INFO\] Preparing level \"(.*)\""),
     "blown_up": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was blown up by (.*)"),
     "shot": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was shot by (.*)"),
     "slain": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was slain by (.*)"),
@@ -17,8 +20,7 @@ actions = {
     "pricked": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was pricked to death"),
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.*)"),
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
-    "server_start": re.compile(DATETIME + "\[INFO\] Starting minecraft server"),
-    "server_name": re.compile(DATETIME + "\[INFO\] Preparing level \"(.*)\"")
+    "chat_message": re.compile(DATETIME + "\[INFO\] \<(.*)\> (.*)")
 }
 
 data = {}
@@ -201,3 +203,10 @@ def handle_burnt_by(regexresults):
 
     add_user_assisted_death(user, cause)
     return None
+
+
+def handle_chat_message(regexresults):
+    time = parse_time(regexresults)
+    user = regexresults[7]
+    message = regexresults[8]
+    mc_dynchat.parse_chat_message(time, user, message, data)

@@ -7,6 +7,7 @@ HOUR = MINUTE * 60
 DAY = HOUR * 24
 MONTH = DAY * 30
 
+
 def seconds_to_formatted_string(time_seconds):
     if time_seconds <= 0:
         return "0 seconds"
@@ -42,6 +43,49 @@ def seconds_to_formatted_string(time_seconds):
 
     output += "%d seconds" % seconds
     return output
+
+
+def get_total_killed_by(user, user_data):
+    count = 0
+
+    if "killedby" in user_data[user]:
+        for villain in user_data[user]["killedby"]:
+            count += user_data[user]["killedby"][villain]
+
+    return count
+
+
+def get_total_assisted_suicides(user, user_data):
+    count = 0
+
+    if "assisted_suicides" in user_data[user]:
+        for cause in user_data[user]["assisted_suicides"]:
+            count += user_data[user]["assisted_suicides"][cause]
+
+    return count
+
+
+def get_total_suicides(user, user_data):
+    count = 0
+
+    if "suicides" in user_data[user]:
+        for method in user_data[user]["suicides"]:
+            count += user_data[user]["suicides"][method]
+
+    return count
+
+
+def get_total_deaths(user, user_data):
+    total_deaths = 0
+
+    if user not in user_data:
+        return None
+
+    total_deaths += get_total_killed_by(user, user_data)
+    total_deaths += get_total_assisted_suicides(user, user_data)
+    total_deaths += get_total_suicides(user, user_data)
+
+    return total_deaths
 
 
 def run(server_name, user_data):

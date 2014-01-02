@@ -4,3 +4,5 @@ dist
 env
 MANIFEST
 *.pyc
+stats.html
+mc_setting.py
