@@ -102,6 +102,16 @@ def get_last_login(user, user_data):
     return user_data[user]["lastlogin"]
 
 
+def get_last_logout(user, user_data):
+    if not user_exists(user, user_data):
+        return None
+
+    if "lastlogout" not in user_data[user]:
+        return None
+
+    return user_data[user]["lastlogout"]
+
+
 def run(server_name, user_data):
     for user in user_data:
         if "totalloginseconds" in user_data[user]:

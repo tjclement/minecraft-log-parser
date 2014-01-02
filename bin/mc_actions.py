@@ -50,6 +50,9 @@ def add_user_time(user, stop_time):
 
         #Clear currentlogintimestamp
         data[user].pop("currentlogintimestamp")
+
+        #Set logout time
+        data[user]["lastlogout"] = stop_time
     return None
 
 
