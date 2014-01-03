@@ -96,6 +96,10 @@ def handle_login(regexresult):
 
     data[user]["currentlogintimestamp"] = time
     data[user]["lastlogin"] = time
+
+    if "firstlogin" not in data[user]:
+        data[user]["firstlogin"] = time
+
     return None
 
 

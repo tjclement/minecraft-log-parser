@@ -14,6 +14,7 @@ commands = {
     "ping": re.compile("!ping"),
     "deaths_self": re.compile("!deaths"),
     "last_seen": re.compile("!lastseen (.*)"),
+    "sage": re.compile("!sage"),
     "norris": re.compile("!norris")
 }
 
@@ -58,6 +59,23 @@ def command_last_seen(user, message, user_data):
             send_chat_message("%s is still online, you silly goose!" % target)
         else:
             send_chat_message("I last saw %(target)s online at %(time)s. What a ninja!" % {"target": target, "time": last_logout})
+
+
+def command_sage(user, message, user_data):
+    sage_name = "No one"
+    sage_time = datetime.datetime.now()
+
+    for player in user_data:
+        if "firstlogin" in user_data[player]:
+            user_first_login = user_data[player]["firstlogin"]
+            if user_first_login < sage_time:
+                sage_name = player
+                sage_time = user_first_login
+
+    message = "%(user)s has been on this server the longest: since %(time)s. He's the server sage!" % \
+              {"user": sage_name, "time": sage_time}
+    send_chat_message(message)
+
 
 def command_norris(user, message, user_data):
     response = requests.get("http://api.icndb.com/jokes/random")
