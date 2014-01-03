@@ -15,6 +15,7 @@ commands = {
     "deaths_self": re.compile("!deaths"),
     "last_seen": re.compile("!lastseen (.*)"),
     "sage": re.compile("!sage"),
+    "uber_nerd": re.compile("!ubernerd"),
     "norris": re.compile("!norris")
 }
 
@@ -74,6 +75,22 @@ def command_sage(user, message, user_data):
 
     message = "%(user)s has been on this server the longest: since %(time)s. He's the server sage!" % \
               {"user": sage_name, "time": sage_time}
+    send_chat_message(message)
+
+
+def command_uber_nerd(user, message, user_data):
+    nerd_name = "No one"
+    nerd_time = 0
+
+    for player in user_data:
+        if "totalloginseconds" in user_data[player]:
+            user_total_login_time = user_data[player]["totalloginseconds"]
+            if user_total_login_time > nerd_time:
+                nerd_name = player
+                nerd_time = user_total_login_time
+
+    message = "%(user)s has played the longest at a whopping %(time)s. What a nerd!" % \
+              {"user": nerd_name, "time": mc_datahandler.seconds_to_formatted_string(nerd_time)}
     send_chat_message(message)
 
 
