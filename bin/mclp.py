@@ -2,6 +2,7 @@
 import re, datetime, operator, sys, time
 import mc_actions
 import mc_datahandler
+import mc_dynchat
 
 reached_log_end = False
 
@@ -70,6 +71,9 @@ def main(logfile_path):
 
     #Invoke data handler once
     mc_datahandler.run(mc_actions.server_name, mc_actions.data)
+
+    #Let the server know we're online
+    mc_dynchat.send_chat_message("My system is now online.")
 
     #Invoke data handler interactively upon every new action
     for line in read_log(logfile_path):
