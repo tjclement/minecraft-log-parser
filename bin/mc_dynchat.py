@@ -19,7 +19,7 @@ commands = {
 
 
 def parse_chat_message(timestamp, user, message, user_data):
-    threshold = datetime.datetime.now() - datetime.timedelta(seconds=5)
+    threshold = datetime.datetime.now() - datetime.timedelta(seconds=30)
 
     if timestamp < threshold:
         return None
