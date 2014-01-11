@@ -20,6 +20,7 @@ actions = {
     "pricked": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was pricked to death"),
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.*)"),
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
+    "suffocated": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) suffocated in a wall"),
     "chat_message": re.compile(DATETIME + "\[INFO\] \<(.*)\> (.*)")
 }
 
@@ -195,6 +196,13 @@ def handle_drowned(regexresults):
     add_user_accidental_death(user, cause)
     return None
 
+def handle_suffocated(regexresults):
+    user = regexresults[7]
+    cause = "suffocated in a wall"
+
+    add_user_accidental_death(user, cause)
+    return None
+
 def handle_fell_by(regexresults):
     user = regexresults[7]
     villain = regexresults[8]
@@ -210,7 +218,6 @@ def handle_burnt_by(regexresults):
 
     add_user_assisted_death(user, cause)
     return None
-
 
 def handle_chat_message(regexresults):
     time = parse_time(regexresults)

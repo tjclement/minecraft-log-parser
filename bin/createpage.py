@@ -23,7 +23,8 @@ waystogodictionary = {
             'drowned': "Went swimming and didn't come up for air",
             "swum in lava": "Dove into lava to see the light",
             "burnt to death": "Jumped into the fire to feel the burn",
-            "pricked to death": "Hugged something sharp"
+            "pricked to death": "Hugged something sharp",
+            "suffocated in a wall": "Suffocated in a wall"
         }
     }
 }
