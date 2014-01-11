@@ -22,6 +22,7 @@ actions = {
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
     "suffocated": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) suffocated in a wall"),
     "chat_message": re.compile(DATETIME + "\[INFO\] \<(.*)\> (.*)")
+    "web_chat_message": re.compile(DATETIME) + "\[INFO\] \[Dynmap\] \[WEB\] (.*): (.*)"
 }
 
 data = {}
@@ -223,4 +224,8 @@ def handle_chat_message(regexresults):
     time = parse_time(regexresults)
     user = regexresults[7]
     message = regexresults[8]
-    mc_dynchat.parse_chat_message(time, user, message, data)
+    return mc_dynchat.parse_chat_message(time, user, message, data)
+
+
+def handle_web_chat_message(regexresults):
+    return handle_chat_message(regexresults)
