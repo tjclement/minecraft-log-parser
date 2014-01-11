@@ -21,7 +21,7 @@ actions = {
     "fell_by": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) was doomed to fall by (.*)"),
     "drowned": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) drowned"),
     "suffocated": re.compile(DATETIME + "\[INFO\] ([A-z0-9]*) suffocated in a wall"),
-    "chat_message": re.compile(DATETIME + "\[INFO\] \<(.*)\> (.*)")
+    "chat_message": re.compile(DATETIME + "\[INFO\] \<(.*)\> (.*)"),
     "web_chat_message": re.compile(DATETIME) + "\[INFO\] \[Dynmap\] \[WEB\] (.*): (.*)"
 }
 
