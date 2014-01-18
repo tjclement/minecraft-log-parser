@@ -21,5 +21,8 @@ Then you should see some neat statistics show up!
 
 !The program acts like a daemon, it will keep reading the log. So run it in a screen session or alternative.
 
+## Credits
+Original fork from https://github.com/stevenleeg/Minecraft-Log-Parser
+
 ## License
 Minecraft Log Parser is released under the [MIT License](http://opensource.org/licenses/MIT). Have fun and make awesome things with it!
